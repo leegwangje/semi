@@ -1,8 +1,10 @@
 package com.example.semiprojectv1.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class MemberDTO {
 
     private String userid;
