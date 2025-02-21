@@ -2,20 +2,26 @@ package com.example.semiprojectv1.member;
 
 import com.example.semiprojectv1.domain.MemberDTO;
 import com.example.semiprojectv1.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.TestConstructor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @MybatisTest
+@RequiredArgsConstructor   // final 필드변수를 생성자 생성
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)   // 생성자 주입시 필요
 public class MemberMapperTest {
 
-    @Autowired
-    private MemberRepository memberMapper;  // final 제거
+    // autowired가 아닌 생성자를 이용한 의존성 주입이 더 나음
+    private final MemberRepository memberMapper;  // final 제거
+
+
 
     @Test
     @DisplayName("MemberMapper Insert test")
