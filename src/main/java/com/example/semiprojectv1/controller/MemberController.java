@@ -15,11 +15,13 @@ public class MemberController {
 
     @GetMapping("/login")
     public String login() {
+
         return "views/member/login";
     }
 
     @GetMapping("/myinfo")
     public String myinfo() {
+
         return "views/member/myinfo";
     }
 
