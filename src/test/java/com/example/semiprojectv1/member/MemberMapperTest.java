@@ -21,8 +21,6 @@ public class MemberMapperTest {
     // autowired가 아닌 생성자를 이용한 의존성 주입이 더 나음
     private final MemberRepository memberMapper;  // final 제거
 
-
-
     @Test
     @DisplayName("MemberMapper Insert test")
     void insertMember() {
