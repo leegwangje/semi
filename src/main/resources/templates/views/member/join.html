@@ -6,21 +6,21 @@
         <th:block layout:fragment="content">
             <main id="content">
                 <h2>회원가입</h2>
-                <form name="joinfrm" id="joinfrm" method="post">
+                <form name="joinfrm" id="joinfrm" method="post" onsubmit="return joinform()">
 
                     <div>
-                    <label for="userid">아아디</label>
+                    <label for="userid">아이디</label>
                     <input type="text" name="userid" id="userid">
                     </div>
 
                     <div>
                     <label for="passwd">비밀번호</label>
-                    <input type="text" name="passwd" id="passwd">
+                    <input type="password" name="passwd" id="passwd">
                     </div>
 
                     <div>
-                    <label for="repasswd">비밀번호확인</label>
-                    <input type="text" name="repasswd" id="repasswd">
+                    <label for="repasswd">비밀번호 확인</label>
+                    <input type="password" name="repasswd" id="repasswd">
                     </div>
 
                     <div>
@@ -46,4 +46,41 @@
                 </form>
             </main>
         </th:block>
+
+        <th:block layout:fragment="script">
+            <script>
+                function joinform() {
+                    let joinfrm = document.forms['joinfrm'];
+
+                    if (joinfrm.userid.value.trim() === '') {
+                        alert('아이디를 입력하세요!!!');
+                        return false;
+                    }
+                   else if (joinfrm.passwd.value.trim() === '') {
+                        alert('비밀번호를 입력하세요!!!');
+                        return false;
+                    }
+                    else if (joinfrm.repasswd.value.trim() === '') {
+                        alert('비밀번호 확인을 입력하세요!!!');
+                        return false;
+                    }
+                    else if (joinfrm.passwd.value !== joinfrm.repasswd.value) {
+                        alert('비밀번호가 서로 다릅니다!');
+                        return false;
+                    }
+                    else if (joinfrm.name.value.trim() === '') {
+                        alert('이름을 입력하세요!!!');
+                        return false;
+                    }
+                    else  if (joinfrm.email.value.trim() === '') {
+                        alert('이메일을 입력하세요!!!');
+                        return false;
+                    }
+
+                    return true; // 모든 검증을 통과하면 폼 제출
+                }
+            </script>
+
+        </th:block>
+
 </html>
