@@ -15,4 +15,9 @@ public interface MemberRepository {
     @Select("select  * from members where userid = #{userid}")
     Member findByUserid(String userid);
 
+    @Select("select  count(userid) from members where userid = #{userid}")
+    int countByUserid(String userid);
+
+    @Select("select  count(email) from members where userid = #{email}")
+    int countByEmail(String email);
 }
