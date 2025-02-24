@@ -47,7 +47,7 @@
                 <input type="password" name="repasswd" id="repasswd" class="form-control" placeholder="비밀번호 확인"
                        required minlength="6" maxlength="18">
                 <label for="repasswd" class="form-label">비밀번호 확인</label>
-                <div id="repasswordError" class="error-message"></div>
+                <div id="repasswdError" class="error-message"></div>
             </div>
 
             <div class="form-floating my-2">
@@ -81,6 +81,21 @@
     <script>
         const joinfrm = document.querySelector('#joinfrm')    // id로 target 함
 
+        const errorMessages = [
+            '아이디는 소문자로 시작하고, 영문자와 숫자만 사용 가능합니다 (최소 6자 ~ 최대 18자)',
+            '비밀번호는 영문 대소문자, 숫자, 특수문자를 포함해야 합니다 (최소 6자 ~ 최대 18자)',
+            '비밀번호가 일치하지 않습니다',
+            '이름은 한글 또는 영문자만 사용 가능합니다',
+            '올바른 이메일 형식이 아닙니다',
+            '자동가입방지를 확인하세요'];
+        const patterns = [
+            /^[a-z][a-z0-9]{5,17}$/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/,
+            /^[가-힣]{2,5}|[a-zA-Z]{2,10}$/,
+            /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/
+        ];
+
         joinfrm.addEventListener("submit", (e) => {
             e.preventDefault(); // submit 버튼 기능 중지, 이 코드 미 작성 시 alert는 뜨지만 페이지는 이동함
 
@@ -89,13 +104,12 @@
             document.querySelectorAll(".error-message")
                 .forEach(error => error.textContent = '');
 
-            // 회원가입 폼 안에 모든 input 요소 수집
             const inputs = joinfrm.querySelectorAll('input');
-            inputs.forEach(input => {
-                if (!input.value) {
-                    let error=document.getElementById(`${input.id}Error`);
-                    error.textContent = `필수 항목입니다.`;
-                    error.style.display = `block`;
+            inputs.forEach((input, idx) => {
+                if (!input.checkValidity()) {
+                    let error = document.getElementById(`${input.id}Error`);
+                    error.textContent = errorMessages[idx];
+                    error.style.display = 'block';
                     isValid = false;
                 }
             });
