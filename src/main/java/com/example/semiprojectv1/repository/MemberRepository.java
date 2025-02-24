@@ -18,6 +18,6 @@ public interface MemberRepository {
     @Select("select  count(userid) from members where userid = #{userid}")
     int countByUserid(String userid);
 
-    @Select("select  count(email) from members where userid = #{email}")
+    @Select("select count(email) from members where email = #{email}")
     int countByEmail(String email);
 }

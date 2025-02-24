@@ -103,7 +103,10 @@
         // ES6에서 처음 도입 - 콜백 지옥 해결, 비동기처리 코드를 깔끔하게 작성
         // async : 비동기 함수임을 선언 - 반환값은 프라미스임
         // await : 비동기 함수의 처리  완료될때까지 기다렸다가 결과를 받아옴
-        const submitJoinfrm = (frm) => {
+        const submitJoinfrm = async (frm) => {
+            // Web Crypto API로 비밀번호 암호화
+            frm.passwd.value= await hashPassword(frm.passwd.value)
+            console.log(frm.passwd.value);
             // 폼에 입력된 데이터를 formData 객체를 초기화
             const formData = new FormData(frm);
 
