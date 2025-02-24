@@ -104,15 +104,23 @@
             document.querySelectorAll(".error-message")
                 .forEach(error => error.textContent = '');
 
+            //회원가입 폼안의 모든 input 요소 수집
             const inputs = joinfrm.querySelectorAll('input');
-            inputs.forEach((input, idx) => {
-                if (!input.checkValidity()) {
-                    let error = document.getElementById(`${input.id}Error`);
-                    error.textContent = errorMessages[idx];
-                    error.style.display = 'block';
+            inputs.forEach((input, idx) => {// input 요소를 하나씩 검사
+                if (!input.checkValidity()) {   // html5 를 이용한 유혀성 검사
+                    let error = document.getElementById(`${input.id}Error`); // 에러메세지 요소 선택
+                    error.textContent = errorMessages[idx]; // 에러메서지 지정
+                    error.style.display = 'block'; // 에러메세지 표시
                     isValid = false;
                 }
             });
+            // 비밀번호 일치 여부 검사
+            if(inputs[1].value !== inputs[2].value){
+                let error = document.getElementById('repasswdError');
+                error.textContent = errorMessages[2];
+                error.style.display = 'block';
+                isValid = false;
+            }
 
             if (isValid) joinfrm.submit();   // 회원정보를 정상적으로 작성했다면
         });
