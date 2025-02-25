@@ -34,9 +34,15 @@ public class MemberController {
     }
 
     @GetMapping("/myinfo")
-    public String myinfo() {
+    public String myinfo(HttpSession session) {
+        // 기본적으로 로그인 페이지로 이동
+        String returnUrl = "views/member/login";
 
-        return "views/member/myinfo";
+        // 세션에 "member"가 있으면 마이페이지로 이동
+        if (session.getAttribute("loginUser") != null) {
+            returnUrl = "views/member/myinfo";
+        }
+        return returnUrl;
     }
 
     // ResponseEntity는 스프링에서 HTTP와 관련된 기능을 구현할때 사용
