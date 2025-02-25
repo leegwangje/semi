@@ -2,12 +2,14 @@
 <html lang="ko"  xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layouts/layout}">
-
+<th:block layout:fragment="css">
+        <link href="/css/member.css" rel="stylesheet">
+</th:block>
         <th:block layout:fragment="content">
             <main id="content">
                 <h2>회원정보</h2>
                 <div id="myinfo">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered mb-0">
                         <!-- 테이블의 컬럼 너비, 스타일 지정-->
                         <colgroup>
                             <col style="width: 30%">
