@@ -1,6 +1,7 @@
 package com.example.semiprojectv1.board;
 
 
+import com.example.semiprojectv1.domain.Board;
 import com.example.semiprojectv1.domain.BoardDTO;
 
 import com.example.semiprojectv1.service.BoardService;
@@ -72,4 +73,21 @@ public class BoardServiceTest {
         // Then
         assertThat(results).isGreaterThan(0);    // 결과 갯수확인*/
     }
+
+    @Test
+    @DisplayName("BoardService readOne test")
+    public void readOneTest() {
+        // Given
+       int bno=3000;
+
+        // When
+       Board results =boardService.readOneBoard(bno);
+
+        // Then
+       assertThat(results).isNotNull();
+       assertThat(results.getUserid()).isNotNull();
+
+    }
+
+
 }
