@@ -1,6 +1,7 @@
 package com.example.semiprojectv1.service;
 
 
+import com.example.semiprojectv1.domain.Board;
 import com.example.semiprojectv1.domain.BoardDTO;
 import com.example.semiprojectv1.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -53,5 +54,11 @@ public class BoardServiceImpl implements BoardService {
 
         return boardMapper.countFindBoard(params);
     }
+
+    @Override
+    public Board readOneBoard(int bno) {
+        return boardMapper.selectOneBoard(bno);
+    }
+
 
 }
