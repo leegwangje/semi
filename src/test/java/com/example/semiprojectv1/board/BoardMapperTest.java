@@ -69,4 +69,21 @@ public class BoardMapperTest {
         assertThat(results).isNotEmpty();       // 비어있는지 여부 확인
         assertThat(results.size()).isGreaterThan(0);    // 결과 갯수확인*/
     }
+
+    @Test
+    @DisplayName("BoardMapper countfind test")
+    void countfindTest() {
+        // Given : 테스트에 사용할 데이터 제공
+        Map<String, Object>params = new HashMap();
+        params.put("pageSize",35);
+        params.put("findtype","title");
+        params.put("findkey","삼성");
+
+        // When : 테스트로 테스트할 기능 호출
+        int results = boardMapper.countFindBoard(params);
+
+        // Then : 호출되고 난 후 결과값 확인
+        log.info("results: {}", results);
+        assertThat(results).isGreaterThan(0);    // 결과 갯수확인*/
+    }
 }
