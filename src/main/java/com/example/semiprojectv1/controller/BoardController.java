@@ -33,8 +33,12 @@ public class BoardController {
     }
     @GetMapping("/find")
     public String find(Model m, String findtype, String findkey,
-                       @RequestParam(defaultValue = "1") int cpg) {
+           @RequestParam(defaultValue = "1") int cpg) {
 
+        m.addAttribute("bds", boardService.findBoard(cpg,findtype,findkey));
+        m.addAttribute("cpg", cpg);
+        m.addAttribute("stblk", ((cpg - 1) / 10) * 10 + 1);
+        m.addAttribute("cntpg", boardService.countfindBoard(findtype,findkey));
         return "views/board/list";
     }
 }
