@@ -22,17 +22,17 @@ const validBoard = (form) => {
             isValid = false;
         }
     });
-    const ggrecaptcha= grecaptcha.getResponse();
-    if (ggrecaptcha ===""){
-        const recaptcha=document.querySelector('#recaptcha');
-        displayErrorMessages(recaptcha,boardMessages[2]);
+    const ggrecaptcha = grecaptcha.getResponse();
+    if (ggrecaptcha === "") {
+        const recaptcha = document.querySelector('#recaptcha');
+        displayErrorMessages(recaptcha, boardMessages[2]);
         isValid = false;
     }
     alert(ggrecaptcha);
 
-
     return isValid;
 }
+
 
 // 게시글 폼 제출
 const submitBoardfrm = async (frm) => {
