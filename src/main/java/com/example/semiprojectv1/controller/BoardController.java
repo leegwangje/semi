@@ -85,6 +85,10 @@ public class BoardController {
                 throw new IllegalStateException("자동가입방지 코드 오류!!!");
 
             }
+
+            if(boardService.newBoard(newBoardDTO)) {
+                response =  ResponseEntity.ok().build();
+            }
         }catch (IllegalStateException ex){
             response=ResponseEntity.badRequest().body(ex.getMessage());
         }
