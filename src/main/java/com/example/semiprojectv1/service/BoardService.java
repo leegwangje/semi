@@ -17,4 +17,6 @@ public interface BoardService {
     int countfindBoard(String findtype,String findkey);
 
     Board readOneBoard(int bno);
+
+    void readOneView(int bno);
 }
