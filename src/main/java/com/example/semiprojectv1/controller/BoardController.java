@@ -21,22 +21,23 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public String index(Model m, @RequestParam(defaultValue = "1") int cpg, HttpServletResponse response) {
+    public String list(Model m, @RequestParam(defaultValue = "1") int cpg,
+                       HttpServletResponse response) {
         // 클라이언트 캐시 제어
-        response.setHeader("Cache-Control", "no-cache,must-revalidate");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
 
+
         // RequestParam에 defaultValue를 이용하면
         // cpg 매개변수가 전달되지 않을 경우 기본값인 1이 전달됨
-
-
-        log.info("board/list 호출 !");
+        log.info("board/list 호출!!");
 
         m.addAttribute("bds", boardService.readBoard(cpg));
         m.addAttribute("cpg", cpg);
-        m.addAttribute("stblk", ((cpg - 1) / 10) * 10 + 1);     // 시작위치
+        m.addAttribute("stblk", ((cpg - 1) / 10) * 10 + 1);
         m.addAttribute("cntpg", boardService.countBoard());
+
         return "views/board/list";
     }
     @GetMapping("/find")
@@ -58,5 +59,11 @@ public class BoardController {
         m.addAttribute("bd", boardService.readOneBoard(bno));
 
         return "views/board/view";
+    }
+
+    @GetMapping("/write")
+    public String write() {
+
+       return "views/board/write";
     }
 }
