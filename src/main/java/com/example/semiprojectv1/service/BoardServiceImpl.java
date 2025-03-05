@@ -1,10 +1,7 @@
 package com.example.semiprojectv1.service;
 
 
-import com.example.semiprojectv1.domain.Board;
-import com.example.semiprojectv1.domain.BoardDTO;
-import com.example.semiprojectv1.domain.NewBoardDTO;
-import com.example.semiprojectv1.domain.NewReplyDTO;
+import com.example.semiprojectv1.domain.*;
 import com.example.semiprojectv1.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -78,6 +75,11 @@ public class BoardServiceImpl implements BoardService {
         int result=boardMapper.insertReply(newReplyDTO);
         return result >0 ;
 
+    }
+
+    @Override
+    public List<Reply> readReply(int pno) {
+        return boardMapper.selectReply(pno);
     }
 
 
