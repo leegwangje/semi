@@ -4,6 +4,7 @@ package com.example.semiprojectv1.service;
 import com.example.semiprojectv1.domain.Board;
 import com.example.semiprojectv1.domain.BoardDTO;
 import com.example.semiprojectv1.domain.NewBoardDTO;
+import com.example.semiprojectv1.domain.NewReplyDTO;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface BoardService {
     void readOneView(int bno);
 
     boolean newBoard(NewBoardDTO newBoardDTO);
+
+    boolean newReply(NewReplyDTO newReplyDTO);
+
+
 }
