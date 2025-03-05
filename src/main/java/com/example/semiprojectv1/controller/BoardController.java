@@ -1,12 +1,10 @@
 package com.example.semiprojectv1.controller;
 
 import com.example.semiprojectv1.domain.NewBoardDTO;
-import com.example.semiprojectv1.repository.BoardRepository;
 import com.example.semiprojectv1.service.BoardService;
 import com.example.semiprojectv1.service.GoogleRecaptchaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,8 +66,10 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public String write() {
+    public String write(Model m) {
 
+        // 시스템 환경변수에 저장된 사이트키 불러옴
+        m.addAttribute("sitekey",System.getenv().get("recaptcha.sitekey"));
        return "views/board/write";
     }
 
