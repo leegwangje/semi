@@ -33,9 +33,12 @@ public interface BoardRepository {
     @Insert("insert into boards (title, userid, contents) values(#{title},#{userid},#{contents})")
     int insertBoard(NewBoardDTO newBoardDTO);
 
-    @Insert("insert into replys(userid,comments,ref,pno) values(#{userid},#{comments},last_insert_id()+1,#{pno})")
+    @Insert("insert into replys (userid,comments,ref,pno) values(#{userid},#{comments},last_insert_id()+1,#{pno})")
     int insertReply(NewReplyDTO newReplyDTO);
 
     @Select("select  * from replys where pno= #{pno} order by ref")
     List<Reply> selectReply(int pno);
+
+    @Insert("insert into replys (userid,comments,ref,pno) values(#{userid},#{comments},#{ref},#{pno})")
+    int insertComment(NewReplyDTO newReplyDTO);
 }
