@@ -46,7 +46,7 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="bd : ${bds}">
+                    <tr th:each="bd : ${bdsdto.bdlist}">
                         <td th:text="${bd.bno}"></td>
                         <td> <a th:href="|/board/view?bno=${bd.bno}|" th:text="${bd.title}"></a> </td>
                         <td th:text="${bd.userid}"></td>
@@ -60,21 +60,20 @@
                         <tr><td colspan="6">
                             <ul class="pagination">
                                 <!--현재 페이지가 1/10보다 이전 링크를 표시-->
-                                <li class="page-item" th:if="${cpg gt 10}">
-                                    <a th:href="|${pglink}${cpg - 1}|" class="page-link">이전</a></li>
-                                <!--출력하는 페이지가 총 페이지 수 이하일때 출력 -->
-                                <th:block th:each="i : ${#numbers.sequence(stblk,stblk+9)}">
-                                    <th:block th:if="${i le cntpg}">
+                                <li class="page-item" th:if="${bdsdto.cpg gt 10}">
+                                    <a th:href="|${pglink}${bdsdto.cpg - 1}|" class="page-link">이전</a></li>
+
+                                <th:block th:each="i : ${#numbers.sequence(bdsdto.stblk,bdsdto.edblk)}">
+
                                     <!--i와 cpg가 일치하지 않으면 평범하게 출력-->
-                                    <li th:class="${(i ne cpg) ? 'page-item' : 'page-item active'}">
+                                    <li th:class="${(i ne bdsdto.cpg) ? 'page-item' : 'page-item active'}">
                                         <a th:href="|${pglink}${i}|"
                                            class="page-link" th:text="${i}"></a>
                                     </li>
                                 </th:block>
-                                </th:block>
 
                                 <li class="page-item">
-                                    <a th:href="|${pglink}${cpg + 1}|" class="page-link">다음</a></li>
+                                    <a th:href="|${pglink}${bdsdto.cpg + 1}|" class="page-link">다음</a></li>
                             </ul>
                         </td></tr>
                     </tfoot>

@@ -34,15 +34,15 @@ public class BoardController {
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
 
-
         // RequestParam에 defaultValue를 이용하면
         // cpg 매개변수가 전달되지 않을 경우 기본값인 1이 전달됨
         log.info("board/list 호출!!");
+        m.addAttribute("bdsdto", boardService.readBoard(cpg));
 
-        m.addAttribute("bds", boardService.readBoard(cpg));
+      /*  m.addAttribute("bds", boardService.readBoard(cpg));
         m.addAttribute("cpg", cpg);
         m.addAttribute("stblk", ((cpg - 1) / 10) * 10 + 1);
-        m.addAttribute("cntpg", boardService.countBoard());
+        m.addAttribute("cntpg", boardService.countBoard());*/
 
         return "views/board/list";
     }
