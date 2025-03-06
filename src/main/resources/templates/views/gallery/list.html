@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 
 <th:block layout:fragment="content">
     <main id="content">
-        <h2><i class="fa-solid fa-image"></i>이미지 겔러리</h2>
+        <h2><i class="fa-solid fa-image"></i> 이미지 갤러리</h2>
 
         <div class="row mt-5 mb-3">
             <div class="row offset-1 col-7">
@@ -35,18 +35,18 @@
         <div class="row justify-content-center mb-4">
 
             <div class="col-10 card" style="width: 18rem"
-            th:each="i : ${#numbers.sequence(1,24)}">
+                 th:each="gal : ${gals}">
                 <a>
                     <img src="http://localhost/cdn/small/cowmeat01_small.jpg"
                          class="card-img-top" alt="..."></a>
 
                 <div class="card-body">
-                    <h5 class="card-title">갤러리 제목</h5>
-                    <p><span>작성자</span>
-                        <span style="float: right">2023-07-20</span></p>
-                    <p><span><i class="fa-regular fa-thumbs-up"></i>999</span>
+                    <h5 class="card-title" th:text="${gal.title}">갤러리 제목</h5>
+                    <p><span th:text="${gal.userid}">작성자</span>
+                        <span style="float: right" th:text="${#strings.substring(gal.regdate,0,10)}">2023-07-20</span></p>
+                    <p><span><i class="fa-regular fa-thumbs-up"></i> [[${gal.thumbs}]]</span>
                         <span style="float: right">
-                       <i class="fa-regular fa-eye"></i>123</span></p>
+                            <i class="fa-regular fa-eye"></i> [[${gal.views}]]</span></p>
                 </div>
             </div>
 
@@ -54,4 +54,5 @@
 
     </main>
 </th:block>
+
 </html>
