@@ -5,6 +5,7 @@ import com.example.semiprojectv1.domain.Board;
 import com.example.semiprojectv1.domain.BoardDTO;
 
 import com.example.semiprojectv1.domain.BoardListDTO;
+import com.example.semiprojectv1.domain.BoardReplyDTO;
 import com.example.semiprojectv1.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -83,11 +84,12 @@ public class BoardServiceTest {
        int bno=3000;
 
         // When
-       Board results =boardService.readOneBoard(bno);
+      // Board results =boardService.readOneBoard(bno);
+        BoardReplyDTO result= boardService.readOneBoardReply(bno);
 
         // Then
-       assertThat(results).isNotNull();
-       assertThat(results.getUserid()).isNotNull();
+       assertThat(result).isNotNull();
+       assertThat(result.getBd().getUserid()).isNotNull();
 
     }
 

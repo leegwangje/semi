@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +30,16 @@ public class BoardServiceImpl implements BoardService {
 
         return new BoardListDTO(cpg,totalItems,pageSize,boards);
     }
+    @Transactional
+    @Override
+    public BoardReplyDTO readOneBoardReply(int bno) {
+        boardMapper.updateViewOne(bno);
+        Board bd= boardMapper.selectOneBoard(bno);
+        List<Reply> rps= boardMapper.selectReply(bno);
 
-    //@Override
-    //public int countBoard() {
-    //    return boardMapper.countPagesBoard(pageSize);
-    // }
+        return new BoardReplyDTO(bd,rps);
+    }
+
 
     @Override
     public List<BoardDTO> findBoard(int cpg, String findtype, String findkey) {
@@ -57,15 +63,15 @@ public class BoardServiceImpl implements BoardService {
         return boardMapper.countFindBoard(params);
     }
 
-    @Override
-    public Board readOneBoard(int bno) {
-        return boardMapper.selectOneBoard(bno);
-    }
+   // @Override
+   // public Board readOneBoard(int bno) {
+       // return boardMapper.selectOneBoard(bno);
+   // }
 
-    @Override
-    public void readOneView(int bno) {
-        boardMapper.updateViewOne(bno);
-    }
+   // @Override
+   // public void readOneView(int bno) {
+      //  boardMapper.updateViewOne(bno);
+   // }
 
     @Override
     public boolean newBoard(NewBoardDTO newBoardDTO) {
@@ -80,10 +86,10 @@ public class BoardServiceImpl implements BoardService {
 
     }
 
-    @Override
-    public List<Reply> readReply(int pno) {
-        return boardMapper.selectReply(pno);
-    }
+   // @Override
+   // public List<Reply> readReply(int pno) {
+   //     return boardMapper.selectReply(pno);
+  //  }
 
     @Override
     public boolean newComment(NewReplyDTO newReplyDTO) {
