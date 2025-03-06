@@ -15,6 +15,6 @@ public class Gallery {
     private LocalDateTime regdate;
     private String thumbs;
     private String views;
-    private String contents;
     private String simgname;
+
 }
