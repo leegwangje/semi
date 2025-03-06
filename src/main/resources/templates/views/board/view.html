@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html lang="ko"  xmlns:th="http://www.thymeleaf.org"
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/layout}">
 
 <head>
     <style>
@@ -11,211 +11,194 @@
             background: #dff0f8 !important; font-size: 32px; text-align: center;
         }
 
-        .vinfo { height: 35px; background: #ccff99 !important;}
-        .vinfo td { padding: 5px; }
+        .vinfo { height: 35px; background: #ccff99 !important; }
+        .vinfo td { padding: 5px }
 
         .vcont {
             height: 500px; border-bottom: 3px solid black;
-            background: #ffffcc !important; padding: 5px; vertical-align: top ;
+            background: #ffffcc !important; padding: 5px; vertical-align: top;
         }
 
         .cmtbg { background: yellow; padding: 5px; }
+
+        .rpybg { background: lime; padding: 5px; }
 
         .reply-border { border-top: 2px solid silver;
             border-bottom:2px solid silver }
 
         .pushend { float: right }
 
-        .rpybg { background: lime; padding: 5px; }
-
-        .pre{white-space: pre-wrap}     /*본문글 줄바꿈 표시*/
-
+        .pre { white-space: pre-wrap } /*본문글 줄바꿈 표시*/
     </style>
-
 </head>
 
-        <th:block layout:fragment="content">
-            <main id="content">
-                <h2>게시판 본문글 </h2>
-                <div class="row  offset-1 col-10 my-3">
-                <table class="table ">
-                    <thead><tr><td>
-                        <button type="button" class="btn btn-light ">
-                            이전게시물</button>
-                        &nbsp;
-                        <button type="button" class="btn btn-light ">
-                            다음게시물</button></td>
-                        <td class="text-end">
-                            <button type="button" class="btn btn-primary " id="newbdbtn">
-                                새글쓰기</button></td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th class="vtit" colspan="2" th:text="${bd.title}">제목</th>
-                    </tr>
+<th:block layout:fragment="content">
+    <main id="content">
+        <h2>게시판 본문글</h2>
+        <div class="row offset-1 col-10 my-3">
+            <table class="table">
+                <thead><tr><td>
+                    <button type="button" class="btn btn-light">
+                        이전게시물</button>
+                    &nbsp;
+                    <button type="button" class="btn btn-light">
+                        다음게시물</button></td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-primary" id="newbdbtn">
+                            새글쓰기</button></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><th class="vtit" colspan="2" th:text="${bd.title}">제목</th></tr>
 
-                    <tr>
-                        <td th:text="${bd.userid}"  class="vinfo" >작성자</td>
-                        <td class="text-end vinfo" th:text="${bd.regdate} + ' / ' + ${bd.thumbs} + ' / ' + ${bd.views}">작성일/추천/조회</td>
-                    </tr>
+                <tr><td th:text="${bd.userid}" class="vinfo">작성자</td>
+                    <td class="text-end vinfo" th:text="|${bd.regdate}/${bd.thumbs}/${bd.views}|">작성일/추천/조회</td></tr>
 
-                    <tr>
-                        <td class="vcont pre" colspan="2" th:text="${bd.contents}">본문글</td>
-                    </tr>
-                    </tbody>
-                    <tfoot><tr><td>
-                        <button type="button" class="btn btn-warning ">
-                            수정하기</button>
-                        &nbsp;
-                        <button type="button" class="btn btn-danger " id="rmvbdbtn">
-                            삭제하기</button></td>
-                        <td class="text-end"><button type="button" class="btn btn-light " id="lstbdbtn">
-                            목록으로</button></td>
-                    </tr>
-                    </tfoot>
+                <tr><td class="vcont pre" colspan="2" th:text="${bd.contents}">본문글</td></tr>
+                </tbody>
+                <tfoot><tr><td>
+                    <button type="button" class="btn btn-warning">
+                        수정하기</button>
+                    &nbsp;
+                    <button type="button" class="btn btn-danger" id="rmvbdbtn">
+                        삭제하기</button></td>
+                    <td class="text-end"><button type="button" class="btn btn-light" id="lstbdbtn">
+                        목록으로</button></td>
+                </tr>
+                </tfoot>
+            </table>
 
-                </table>
+            <div class="my-3">
+                <h3><i class="fa fa-commenting"></i> 나도 한마디</h3>
+            </div>
 
-                    <div class="py-3">
-                        <h3><i class="fa fa-commenting"></i> 나도 한마디</h3>
-                    </div>
-
-                    <table class="table reply-border">
-                        <tr th:each="rp:${rps}">
-                            <th:block th:if="${rp.rno eq rp.ref}">
-                            <!--댓글-->
-                            <td class="text-left" th:text="${rp.userid}"></td>
-                            <td>
-                                <div class="cmtbg"><span th:text="${rp.regdate}">2025-03-04 23:41:27</span>
-                                    <span class="pushend">
+            <table class="table reply-border">
+                <tr th:each="rp : ${rps}">
+                    <th:block th:if="${rp.rno eq rp.ref}">
+                        <td class="text-left" th:text="${rp.userid}"></td>
+                        <td>
+                            <div class="cmtbg"><span th:text="${rp.regdate}">2025-03-04 23:41:27</span>
+                                <span class="pushend">
                                         <a href="#" th:data-ref="${rp.rno}" data-bs-toggle="modal"
                                            data-bs-target="#cmtModal">[추가]</a> [수정] [삭제]</span></div>
-                                <p class="py-1 pre" th:text="${rp.comments}"></p>
-                            </td>
-                            </th:block>
+                            <p class="py-1 pre" th:text="${rp.comments}"></p>
+                        </td>
+                    </th:block>
 
-                            <!--대댓글-->
-                            <th:block th:if="${rp.rno ne rp.ref}">
-                            <td class="text-left">&nbsp;</td>
-                            <td>
-                                <div class="rpybg"><span th:text="${rp.userid}">작성자</span>
-                                    <span class="pushend" th:text="${rp.regdate}">작성일</span></div>
-                                <p class="py-1 pre" th:text="${rp.comments}"></p>
-                            </td>
-                            </th:block>
-                        </tr>
-                    </table><!--댓글/대댓글 목록-->
+                    <th:block th:if="${rp.rno ne rp.ref}">
+                        <td class="text-left">&nbsp;</td>
+                        <td>
+                            <div class="rpybg"><span th:text="${rp.userid}">작성자</span>
+                                <span class="pushend" th:text="${rp.regdate}">작성일</span></div>
+                            <p class="py-1 pre" th:text="${rp.comments}"></p>
+                        </td>
+                    </th:block>
+                </tr>
+            </table><!-- 댓글/대댓글 목록 -->
 
+            <div class="py-3">
+                <form class="card card-body bg-light" method="post"
+                      name="replyfrm" id="replyfrm">
+                    <div class="row align-items-center">
+                        <div class="col text-center"><label>abc123</label></div>
 
-                    <div class="py-3">
-                        <form class="card card-body bg-light" method="post"
-                              name="replyfrm" id="replyfrm">
-                            <div class="row align-items-center">
-                                <div class="col text-center"><label>abc123</label></div>
+                        <div class="col-8"><textarea id="comments" rows="10" name="comments"
+                                                     class="form-control col-7"></textarea></div>
 
-                                <div class="col-8"><textarea id="comments" rows="10" name="comments"
-                                                             class="form-control col-7"></textarea></div>
+                        <div class="col"><button type="button" id="replybtn"
+                                                 class="btn btn-dark">
+                            <i class="fa fa-commenting"></i> 댓글쓰기</button></div>
+                    </div>
+                    <input type="hidden" name="userid" value="abc123" />
+                    <input type="hidden" name="pno" th:value="${param.bno}" />
+                </form>
+            </div><!-- 댓글쓰기 -->
 
-                                <div class="col"><button type="button" id="replybtn"
-                                                         class="btn btn-dark">
-                                    <i class="fa fa-commenting"></i>댓글쓰기</button></div>
-                            </div>
-                            <input type="hidden" name="userid" value="abc123" />
-                            <input type="hidden" name="pno" th:value="${param.bno}" />
-                        </form>
-                    </div><!-- 댓글쓰기 -->
+        </div>
+    </main>
 
-
+    <div class="modal hide" id="cmtModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">대댓글 쓰기</h3>
                 </div>
-            </main>
-
-            <div class="modal hide" id="cmtModal" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">대댓글 쓰기</h3>
-                        </div>
-                        <div class="modal-body">
-                            <form name="cmmtfrm" id="cmmtfrm" method="post">
+                <div class="modal-body">
+                    <form name="cmmtfrm" id="cmmtfrm" method="post">
                             <textarea name="comments" id="cmmt" rows="8" cols="60"
                                       class="span4"></textarea>
-                                <input type="hidden" name="userid" value="abc123">
-                                <input type="hidden" name="pno" th:value="${param.bno}">
-                                <input type="hidden" name="ref" id="refno">
-                            </form>
-                        </div>
-                        <div class="modal-footer justify-content-center">
-                            <button type="button" id="cmmtbtn"
-                                    class="btn btn-danger">대댓글 작성</button>
-                        </div>
-                    </div>
+                        <input type="hidden" name="userid" value="abc123">
+                        <input type="hidden" name="pno" th:value="${param.bno}">
+                        <input type="hidden" name="ref" id="refno">
+                    </form>
                 </div>
-            </div><!-- 대댓글 쓰기 -->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="cmmtbtn"
+                            class="btn btn-danger">대댓글 작성</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- 대댓글 쓰기 -->
 
-        </th:block>
+</th:block>
 
-        <th:block layout:fragment="script">
-            <script src="/js/board.js"></script>
-            <script th:inline="javascript">
-                let newbdbtn = document.querySelector("#newbdbtn");
-                let rmvbdbtn = document.querySelector("#rmvbdbtn");
-                let lstbdbtn = document.querySelector("#lstbdbtn");
-                let replybtn = document.querySelector("#replybtn");
-                let cmmtbtn = document.querySelector("#cmmtbtn");
-                let cmtModal = document.querySelector("#cmtModal");
+<th:block layout:fragment="script">
+    <script src="/js/board.js"></script>
+    <script th:inline="javascript">
+        let newbdbtn = document.querySelector("#newbdbtn");
+        let rmvbdbtn = document.querySelector("#rmvbdbtn");
+        let lstbdbtn = document.querySelector("#lstbdbtn");
+        let replybtn = document.querySelector("#replybtn");
+        let cmmtbtn = document.querySelector("#cmmtbtn");
+        let cmtModal = document.querySelector("#cmtModal");
 
-                //질의문자열에서 bno를 자바스크립트 코드에 삽입
-                const bno = [[${param.bno[0]}]];
+        // 질의문자열에서 bno를 자바스크립트 코드에 삽입
+        const bno = [[${param.bno[0]}]];
 
-                newbdbtn.addEventListener('click', (e) => {
+        newbdbtn.addEventListener('click', (e) => {
+            location.href = `/board/write`;
+        });
+        rmvbdbtn.addEventListener('click', (e) => {
+            if (confirm('정말로 삭제하시겠습니까?')) {
+                location.href = `/board/remove?bno=${bno}`;
+            }
+        });
+        lstbdbtn.addEventListener('click', (e) => {
+            location.href = `/board/list`;
+        });
 
-                location.href= `/board/write` ;
-                });
+        replybtn.addEventListener('click', (e) => {
+            const comments = document.querySelector('#comments');
+            const replyfrm = document.querySelector('#replyfrm');
+            if (comments.value === '') {
+                alert('댓글을 작성하세요!!');
+                return;
+            }
+            replyfrm.action = '/board/reply';
+            replyfrm.submit();
+        });
 
-                rmvbdbtn.addEventListener('click', (e) => {
-                    if(confirm('정말로 삭제하시겠습니까??')) {
-                        location.href = `/board/remove?bno=${bno}`;
-                    }
-                });
+        cmmtbtn.addEventListener('click', (e) => {
+            const cmmt = document.querySelector('#cmmt');
+            const cmmtfrm = document.querySelector('#cmmtfrm');
+            if (cmmt.value === '') {
+                alert('대댓글을 작성하세요!!');
+                return;
+            }
+            cmmtfrm.action = '/board/cmmt';
+            cmmtfrm.submit();
+        });
 
-                lstbdbtn.addEventListener('click', (e) => {
+        // 대댓글창이 띄워지면, 댓글번호를 대댓글작성폼에 초기화함
+        // data-xx : 사용자 정의 요소
+        cmtModal.addEventListener('show.bs.modal', (e) => {
+            // 이벤트가 발생한 요소의 특정 속성값을 가져옴
+            const refVal = e.relatedTarget.getAttribute('data-ref');
+            let refno = document.querySelector('#refno');
+            refno.value = refVal;
+        });
 
-                location.href= `/board/list` ;
-                });
+    </script>
+</th:block>
 
-                replybtn.addEventListener('click', (e) => {
-                    const comments=document.querySelector('#comments');
-                    const replyfrm=document.querySelector('#replyfrm');
-
-                    if(comments.value===''){
-                        alert('댓글을 작성하세요!!');
-                        return;
-                    }
-                    replyfrm.action = '/board/reply';
-                    replyfrm.submit();
-                });
-
-                cmmtbtn.addEventListener('click',(e) =>{
-                    const cmmt=document.querySelector('#cmmt');
-                    const cmmtfrm=document.querySelector('#cmmtfrm');
-
-                    if(cmmt.value===''){
-                        alert('댓글을 작성하세요!!');
-                        return;
-                    }
-                    cmmtfrm.action = '/board/cmmt';
-                    cmmtfrm.submit();});
-
-                // 대댓글창이 띄워지면, 댓글번호를 대댓글작성폼에 초기화함
-                // data-xx : 사용자 정의 요소
-                cmtModal.addEventListener('show.bs.modal',(e) =>{
-                    // 이벤트가 발생한 요소의 특정 속성값을 가져옴
-                    const refVal = e.relatedTarget.getAttribute('data-ref');
-                    let refno = document.querySelector('#refno');
-                    refno.value = refVal;
-                });
-
-            </script>
-        </th:block>
 </html>
