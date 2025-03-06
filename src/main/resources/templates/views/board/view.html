@@ -49,12 +49,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr><th class="vtit" colspan="2" th:text="${bd.title}">제목</th></tr>
+                <tr><th class="vtit" colspan="2" th:text="${bdrps.bd.title}">제목</th></tr>
 
-                <tr><td th:text="${bd.userid}" class="vinfo">작성자</td>
-                    <td class="text-end vinfo" th:text="|${bd.regdate}/${bd.thumbs}/${bd.views}|">작성일/추천/조회</td></tr>
+                <tr><td th:text="${bdrps.bd.userid}" class="vinfo">작성자</td>
+                    <td class="text-end vinfo" th:text="|${bdrps.bd.regdate}/${bdrps.bd.thumbs}/${bdrps.bd.views}|">작성일/추천/조회</td></tr>
 
-                <tr><td class="vcont pre" colspan="2" th:text="${bd.contents}">본문글</td></tr>
+                <tr><td class="vcont pre" colspan="2" th:text="${bdrps.bd.contents}">본문글</td></tr>
                 </tbody>
                 <tfoot><tr><td>
                     <button type="button" class="btn btn-warning">
@@ -73,7 +73,7 @@
             </div>
 
             <table class="table reply-border">
-                <tr th:each="rp : ${rps}">
+                <tr th:each="rp : ${bdrps.rps}">
                     <th:block th:if="${rp.rno eq rp.ref}">
                         <td class="text-left" th:text="${rp.userid}"></td>
                         <td>
