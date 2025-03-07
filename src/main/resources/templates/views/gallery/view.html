@@ -34,7 +34,6 @@
 
 <th:block layout:fragment="content">
     <main id="content">
-
         <h2><i class="fa-solid fa-image"></i> 이미지 갤러리 본문글</h2>
         <div class="row offset-1 col-10 my-3">
             <table class="table">
@@ -45,7 +44,8 @@
                     <button type="button" class="btn btn-light">
                         다음게시물</button></td>
                     <td class="text-end">
-                        <button type="button" class="btn btn-primary" id="newbdbtn" th:if="${session.loginUser ne null}">
+                        <button type="button" class="btn btn-primary" id="newbdbtn"
+                                th:if="${session.loginUser ne null}">
                             새글쓰기</button></td>
                 </tr>
                 </thead>
@@ -55,18 +55,20 @@
                 <tr><td th:text="${galgi.gal.userid}" class="vinfo">작성자</td>
                     <td class="text-end vinfo" th:text="|${galgi.gal.regdate}/${galgi.gal.thumbs}/${galgi.gal.views}|">작성일/추천/조회</td></tr>
 
-                <tr><td class="vcont " colspan="2" >
-                    <div class="pre">[[${galgi.gal.contents}]]</div>
-                    <th:block th:each="g : ${galgi.gi}">
-                    <img th:src="|http://localhost/cdn/${g.imgname}|"
-                    class="img-fluid">
-                    </th:block>
+                <tr>
+                    <td class="vcont" colspan="2">
+                        <div class="pre">[[${galgi.gal.contents}]]</div>
 
-                    <th:block th:each="g : ${galgi.gi}">
-                        <div class="bg-light"  th:text="|${g.imgname} (${g.imgsize}) kb |"></div>
-                    </th:block>
-                </td>
+                        <th:block th:each="g : ${galgi.gi}">
+                            <img th:src="|http://localhost/cdn/${g.imgname}|"
+                                 class="img-fluid">
+                        </th:block>
 
+                        <th:block th:each="g : ${galgi.gi}">
+                            <div class="bg-light"
+                                 th:text="|${g.imgname} (${g.imgsize}) kb|"></div>
+                        </th:block>
+                    </td>
                 </tr>
                 </tbody>
                 <tfoot><tr><td>
@@ -81,9 +83,9 @@
                 </tfoot>
             </table>
 
-
         </div>
     </main>
+
 </th:block>
 
 <th:block layout:fragment="script">
@@ -93,9 +95,8 @@
         let rmvgalbtn = document.querySelector("#rmvgalbtn");
         let lstgalbtn = document.querySelector("#lstgalbtn");
 
-
         // 질의문자열에서 gno를 자바스크립트 코드에 삽입
-        const bno = [[${gno}]];
+        const gno = [[${gno}]];
 
         newgalbtn?.addEventListener('click', (e) => {
             location.href = `/gallery/write`;
