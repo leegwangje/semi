@@ -25,4 +25,7 @@ public interface GalleryRepository {
 
 
     int insertGallery(NewGalleryDTO gal);
+
+    @Insert("insert into gallery_images(gno, imgname,imgsize) values (#{gno},#{imgname},#{imgsize})")
+    int insertGalleryImage(NewGalleryImageDTO gi);
 }

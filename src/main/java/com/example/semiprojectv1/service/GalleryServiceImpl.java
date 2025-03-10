@@ -16,6 +16,7 @@ import java.util.List;
 public class GalleryServiceImpl implements GalleryService {
 
     private final GalleryRepository galleryMapper;
+    private final GalleryUploadService galleryUploadService;
 
     @Override
     public List<GalleryListDTO> selectGallery() {
@@ -44,8 +45,18 @@ public class GalleryServiceImpl implements GalleryService {
 
         // 첨부된 파일을 업로드 처리하고
         // 알아낸 글번호로 첨부된 파일에 대한 정보를 gallery_images에 저장
+        if(!ginames.isEmpty()) {    // 첨부파일이 존재한다면
+            // 업로드 처리 후 업로드된 파일들의 정보를 리스트형태로 받아옴
+            List<NewGalleryImageDTO> gis = galleryUploadService.processUpload(ginames,gno);
 
-        // 첨부된 파일들 중 첫번째 이미지 파일에 썸내일 처리
+            // 업로드된 파일의 정보를 gallery_images 테이블에 저장
+            // 즉, 첨부된 파일정보를 개별 행으로 저장
+            for(NewGalleryImageDTO gi : gis){
+                galleryMapper.insertGalleryImage(gi);
+            }
+        }
+
+        // 첨부된 파일들 중 첫번째 이미지 파일에 썸내일 처리0
 
         return false;
     }
