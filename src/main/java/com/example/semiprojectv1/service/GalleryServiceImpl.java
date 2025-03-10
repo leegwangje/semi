@@ -54,9 +54,10 @@ public class GalleryServiceImpl implements GalleryService {
             for(NewGalleryImageDTO gi : gis){
                 galleryMapper.insertGalleryImage(gi);
             }
+            // 첨부된 파일들 중 첫번째 이미지 파일에 썸내일 처리
+            galleryUploadService.makeThumbnail(
+                    gal.getSimgname(),gis.get(0).getImgname());
         }
-
-        // 첨부된 파일들 중 첫번째 이미지 파일에 썸내일 처리0
 
         return false;
     }
