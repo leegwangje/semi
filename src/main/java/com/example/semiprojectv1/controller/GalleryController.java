@@ -1,21 +1,28 @@
 package com.example.semiprojectv1.controller;
 
+import com.example.semiprojectv1.domain.NewBoardDTO;
+import com.example.semiprojectv1.domain.NewGalleryDTO;
 import com.example.semiprojectv1.service.GalleryService;
+import com.example.semiprojectv1.service.GoogleRecaptchaService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
+@Slf4j
 @Controller
 @RequestMapping("/gallery")
+@RequiredArgsConstructor
 public class GalleryController {
 
     private final GalleryService galleryService;
+    private final GoogleRecaptchaService googleRecaptchaService;
 
-    public GalleryController(GalleryService galleryService) {
-        this.galleryService = galleryService;
-    }
 
     @GetMapping("/list")
     public String list(Model m) {
@@ -49,6 +56,30 @@ public class GalleryController {
 
         m.addAttribute("sitekey",System.getenv("recaptcha.sitekey"));
      return "views/gallery/write";
+    }
+
+    @PostMapping("/write")
+    public ResponseEntity<?> writeok(NewGalleryDTO gal, List <MultipartFile> ginames,
+                                     @RequestParam("g-recaptcha-response")   String gRecaptchaResponse ) {
+            ResponseEntity<?> response = ResponseEntity.internalServerError().build();
+            log.info("submit된 겔러리 정보1 : {}",gal);
+            log.info("submit된 겔러리 정보2 : {}",ginames);
+
+
+            try {
+                if (!googleRecaptchaService.verifyRecaptcha(gRecaptchaResponse)) {
+                    throw new IllegalStateException("자동가입방지 코드 오류!!!");
+
+                }
+
+                if(galleryService.newGalleryImage(gal,ginames)) {
+                    response =  ResponseEntity.ok().build();
+                }
+            }catch (IllegalStateException ex){
+                response=ResponseEntity.badRequest().body(ex.getMessage());
+            }
+
+            return response;
     }
 
 

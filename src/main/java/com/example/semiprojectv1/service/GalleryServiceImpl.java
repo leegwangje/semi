@@ -1,14 +1,12 @@
 package com.example.semiprojectv1.service;
 
-import com.example.semiprojectv1.domain.GalleryImage;
-import com.example.semiprojectv1.domain.GalleryListDTO;
-import com.example.semiprojectv1.domain.GalleryImageDTO;
-import com.example.semiprojectv1.domain.GalleryViewDTO;
+import com.example.semiprojectv1.domain.*;
 import com.example.semiprojectv1.repository.GalleryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,5 +33,20 @@ public class GalleryServiceImpl implements GalleryService {
         return new GalleryImageDTO(gal,gi);
 
 
+    }
+    @Transactional
+    @Override
+    public boolean newGalleryImage(NewGalleryDTO gal, List<MultipartFile> ginames) {
+        // 작성한 게시글을 gallerys에 저장하고, 생성된 글번호를 알아냄
+        int gno = -999;
+        if(galleryMapper.insertGallery(gal)>0)
+            gno = gal.getGgno();
+
+        // 첨부된 파일을 업로드 처리하고
+        // 알아낸 글번호로 첨부된 파일에 대한 정보를 gallery_images에 저장
+
+        // 첨부된 파일들 중 첫번째 이미지 파일에 썸내일 처리
+
+        return false;
     }
 }
