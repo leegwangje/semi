@@ -63,6 +63,7 @@ public class BoardController {
 
         m.addAttribute("bdrps", boardService.readOneBoardReply(bno));
 
+
         return "views/board/view";
     }
 
@@ -72,7 +73,7 @@ public class BoardController {
 
         if(session.getAttribute("loginUser") != null) {
             // 시스템 환경변수에 저장된 사이트키 불러옴
-            m.addAttribute("sitekey", System.getenv().get("recaptcha.sitekey"));
+            m.addAttribute("sitekey", System.getenv().get("recaptcha_sitekey"));
             return "views/board/write";
         }
         return returnPage;
