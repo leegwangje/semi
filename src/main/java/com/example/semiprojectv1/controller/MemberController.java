@@ -111,12 +111,12 @@ public class MemberController {
 //        }
 //        return response;
 //    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();   // 세션 제거
-
-        return "redirect:/";
-    }
+    // 스프링 시큐리티가 자동으로 처리 - 생략
+//    @GetMapping("/logout")
+//    public String logout(HttpSession session) {
+//        session.invalidate();   // 세션 제거
+//
+//        return "redirect:/";
+//    }
 
 }
