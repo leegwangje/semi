@@ -4,9 +4,12 @@ import com.example.semiprojectv1.domain.NewBoardDTO;
 import com.example.semiprojectv1.domain.NewReplyDTO;
 import com.example.semiprojectv1.service.BoardService;
 import com.example.semiprojectv1.service.GoogleRecaptchaService;
+import com.example.semiprojectv1.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,7 @@ public class BoardController {
 
     private final BoardService boardService;
     private final GoogleRecaptchaService googleRecaptchaService;
+    private final MemberService memberService;
 
     @GetMapping("/list")
     public String list(Model m, @RequestParam(defaultValue = "1") int cpg,
@@ -68,14 +72,15 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public String write(Model m, HttpSession session) {
+    public String write(Model m, Authentication authentication) {
         String returnPage = "redirect:/member/login";
 
-        if(session.getAttribute("loginUser") != null) {
-            // 시스템 환경변수에 저장된 사이트키 불러옴
+        if(authentication != null && authentication.isAuthenticated()) {
+
             m.addAttribute("sitekey", System.getenv().get("recaptcha_sitekey"));
-            return "views/board/write";
+            returnPage= "views/board/write";
         }
+
         return returnPage;
     }
 
