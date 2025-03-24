@@ -27,6 +27,7 @@ public class MemberController {
 
     @GetMapping("/join")
     public String join() {
+
         return "views/member/join";
     }
 
@@ -34,6 +35,11 @@ public class MemberController {
     public String login() {
 
         return "views/member/login";
+    }
+
+    @GetMapping("/loginfail")
+    public String fail() {
+        return "views/member/loginfail";
     }
 
     @GetMapping("/myinfo")
