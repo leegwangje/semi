@@ -1,5 +1,7 @@
 package com.example.semiprojectv1.config;
 
+import com.example.semiprojectv1.custom.CustomAuthenticationFailureHandler;
+import com.example.semiprojectv1.custom.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
+    private final CustomAuthenticationSuccessHandler successHandler;
+    private final CustomAuthenticationFailureHandler failureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -34,14 +38,15 @@ public class SecurityConfig {
                 .passwordParameter("passwd") // 비밀번호 매개변수 지정 !!
                 .defaultSuccessUrl("/member/myinfo") // 로그인 성공시 리다이렉트 URL
                 .failureUrl("/member/loginfail") // 로그인 실패시 리다이렉트 URL
-                .permitAll()
+                .successHandler(successHandler)
+                .failureHandler(failureHandler)
             .and()
             .logout()// 로그아웃 설정
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 URL 지정
                 .logoutSuccessUrl("/") // 로그아웃 성공후 리다이렉트될 URL
                 .invalidateHttpSession(true) // 세션 무효화
-                .deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제
-                .permitAll();
+                .deleteCookies("JSESSIONID") ;// JSESSIONID 쿠키 삭제
+
 
         return http.build();
     }
