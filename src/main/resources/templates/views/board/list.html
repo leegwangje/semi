@@ -71,13 +71,19 @@
         <script src="/js/board.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                fetch('/api/v1/board/list', {
+
+                const url = new URL(window.location.href);
+                const findtype = url.searchParams.get('findtype');
+                const findkey = url.searchParams.get('findkey');
+                const cpg = (url.searchParams.get('cpg') ===null) ? 1: url.searchParams.get('cpg');
+
+                fetch(`/api/v1/board/list?cpg=${cpg}`, {
                     headers: {'Accept': 'application/json'}
                 }).then(response => response.json())
                 .then(data => {
                     //console.log(data);
                     loadBoardList(data);
-                    loadBoardPgn(data);
+                    loadBoardPgn(data,findtype,findkey);
                 }).catch(error => {
                     console.error('데이터 불러오는 중 오류발생!!');
                 });
@@ -105,11 +111,9 @@
                 });
             };
 
-            const loadBoardPgn = (data) => {
+            const loadBoardPgn = (data,findtype,findkey) => {
                 const pgnBody = document.querySelector('.pagination');
-                const url = new URL(window.location.href);
-                const findtype = url.searchParams.get('findtype');
-                const findkey = url.searchParams.get('findkey');
+
 
 
                 const pglink = (findkey === null)?
