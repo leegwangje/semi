@@ -44,16 +44,11 @@ public class BoardController {
     @GetMapping("/find")
     public String find() {
 
-
         return "views/board/list";
     }
 
     @GetMapping("/view")
-    public String view(Model m,int bno) {
-
-
-        m.addAttribute("bdrps", boardService.readOneBoardReply(bno));
-
+    public String view() {
 
         return "views/board/view";
     }
