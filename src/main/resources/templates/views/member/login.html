@@ -5,13 +5,15 @@
 
 
 
-<th:block layout:fragment="css">
-    <link href="/css/member.css" rel="stylesheet">
-</th:block>
+    <th:block layout:fragment="css">
+        <meta name="_csrf" th:content="${_csrf.token}" />
+        <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+        <link href="/css/member.css" rel="stylesheet">
+    </th:block>
 
-<th:block layout:fragment="content">
-    <main id="content">
-        <h2>로그인</h2>
+    <th:block layout:fragment="content">
+        <main id="content">
+            <h2>로그인</h2>
         <form name="loginfrm" id="loginfrm" method="post" novalidate >
 
             <div class="form-floating py-2" >
@@ -39,6 +41,8 @@
     <script src="/js/member.js"></script>
     <script>
         const loginfrm = document.querySelector('#loginfrm')    // id로 target 함
+        const token = document.querySelector('meta[name="_csrf"]').content;
+        const headerName = document.querySelector('meta[name="_csrf_header"]').content;
 
         loginfrm.addEventListener("submit", (e) => {
             e.preventDefault(); // submit 버튼 기능 중지, 이 코드 미 작성 시 alert는 뜨지만 페이지는 이동함
@@ -48,7 +52,7 @@
             // 입력 유효성 검사
             let isValid=validLogin(e.target);
 
-            if (isValid) submitLoginfrm(e.target);   // 회원정보를 정상적으로 작성했다면
+            if (isValid) submitLoginfrm(e.target,token,headerName);   // 회원정보를 정상적으로 작성했다면
         });
 
     </script>
