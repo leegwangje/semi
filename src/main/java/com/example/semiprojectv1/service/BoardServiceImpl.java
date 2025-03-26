@@ -45,17 +45,15 @@ public class BoardServiceImpl implements BoardService {
         int stnum = (cpg - 1) * pageSize;
 
         Map<String, Object> params = new HashMap<>();
-        params.put("stnum", (cpg - 1) * pageSize);
         params.put("stnum", stnum);
         params.put("pageSize", pageSize);
         params.put("findtype", findtype);
         params.put("findkey", findkey);
 
-        int totalItems=countfindBoard(params);
-        List<BoardDTO> boards= boardMapper.selectFindBoard(params);
+        int totalItems = countfindBoard(params);
+        List<BoardDTO> boards = boardMapper.selectFindBoard(params);
 
-        return new BoardListDTO(cpg,totalItems,pageSize,boards);
-
+        return new BoardListDTO(cpg, totalItems, pageSize, boards);
     }
 
     @Override
