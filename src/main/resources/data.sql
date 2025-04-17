@@ -27,3 +27,4 @@ insert into gallery_images (gno, imgname, imgsize) values (1, 'cowmeat04.jpg',12
 insert into gallery_images (gno, imgname, imgsize) values (1, 'cowmeat05.jpg',148542);
 --
 --
+-
